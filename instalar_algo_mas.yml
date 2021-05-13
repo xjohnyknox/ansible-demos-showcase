@@ -1,0 +1,9 @@
+---
+- name: "Instalar algo mas de prueba Notepad++"
+  hosts: win2
+  tasks:
+    - name: Installing notepad++
+      win_chocolatey:
+          name:
+           - notepadplusplus
+          state: present
