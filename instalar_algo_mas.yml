@@ -5,5 +5,5 @@
     - name: Installing notepad++
       win_chocolatey:
           name:
-           - notepadplusplus
+           - "{{ paquete }}"
           state: present
