@@ -1,0 +1,9 @@
+---
+- hosts: win2 
+  tasks:
+   - name: Seteando una variable de entorno para el sistema
+     win_environment:
+       state: present
+       name: NuevaVariable
+       value: "{{ variable  }}"
+       level: machine
