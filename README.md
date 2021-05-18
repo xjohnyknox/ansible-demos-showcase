@@ -1,2 +1,4 @@
 # ansible-demos-showcase
-Personal Demos using ansible playbooks inside my lab
+Showcase de demos, para clonar y mostrar a los clientes.
+
+Encontraras varias opciones, sobretodo ocupando maquinas windows.
