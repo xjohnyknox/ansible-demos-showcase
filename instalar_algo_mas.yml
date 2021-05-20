@@ -1,8 +1,15 @@
 ---
+<<<<<<< HEAD
 - name: "Instalar algo mas personalizado"
   hosts: win2
   tasks:
     - name: Installing "{{ paquete }}"
+=======
+- name: "Instalar algo mas"
+  hosts: win2
+  tasks:
+    - name: Instalando lo que pusiste
+>>>>>>> 7d5cc1944f589d7cba4ba7f844863a64405f59d4
       win_chocolatey:
           name:
            - {{ paquete  }}
