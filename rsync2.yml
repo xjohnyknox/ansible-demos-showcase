@@ -1,0 +1,9 @@
+---
+- name: "Copiando al disco duro externo"
+  hosts: localhost
+  tasks:
+    - name: Copying openmind
+      ansible.posix.synchronize:
+        src: /tmp/main
+        dest: /tmp/bkp/
+        recursive: yes

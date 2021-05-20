@@ -1,0 +1,64 @@
+---
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Create resource group
+    azure_rm_resourcegroup:
+      name: myResourceGroup
+      location: eastus
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: myResourceGroup
+      name: myVnet
+      address_prefixes: "10.0.0.0/16"
+  - name: Add subnet
+    azure_rm_subnet:
+      resource_group: myResourceGroup
+      name: mySubnet
+      address_prefix: "10.0.1.0/24"
+      virtual_network: myVnet
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: myResourceGroup
+      allocation_method: Static
+      name: myPublicIP
+    register: output_ip_address
+  - name: Dump public IP for VM which will be created
+    debug:
+      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup:
+      resource_group: myResourceGroup
+      name: myNetworkSecurityGroup
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1001
+          direction: Inbound
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: myResourceGroup
+      name: myNIC
+      virtual_network: myVnet
+      subnet: mySubnet
+      public_ip_name: myPublicIP
+      security_group: myNetworkSecurityGroup
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: myResourceGroup
+      name: myVMdemoRHEL
+      vm_size: Standard_DS1_v2
+      admin_username: azureuser
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: /home/azureuser/.ssh/authorized_keys
+          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0EtURoBOFJw+05QhAMSwqxoZmb6yNKfZIbQOyr5KhCOHK70fxj3xmoqE/D6awOcV1H6HYt5NHOUoS+p+K+hdiJjoMtt36z8CwMZhPBZlq7fRXBYGCixAlA469IfOvz9ucgJFP9MSDvEjebkutt8V9XOaDgbhNLL6f8rA/0aX31Cu0Skl7jYrdOtH32XVeysB0vWwDdLvDO7lbShEjcOwDAJCG4PHu8Gs17QKq8LVpQRPfuJRcV+6b78oOEQKsfSfQlmGqkDLTKYpom9TfOOMpnl3fwERoWNkni4elbGhzWrecPjvJKgIGMz8XwxluZ7Rh2znXNRkSlEYtVhIc84j7OKI8l0VmssUE/HYJds1/p8X0NjFapPCSeTdPnK9Ghb4PAbRMxsE3EnLCtIzDboqeceSWljcLgiO/HiUpso08khqPL5T38eKsGCs7vwjyR1IhMD6QfidBhCcT9TVYMo7PlfreQPKzoyM7VsVD+MW5rip4iPnvP0+CCpjmExZEnys= xjohnyx@xjohnyx-LOL
+      network_interfaces: myNIC
+      image:
+        offer: SQL2017-RHEL7
+        publisher: MicrosoftSQLServer
+        sku: 'Enterprise'
+        version: latest

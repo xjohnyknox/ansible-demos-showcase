@@ -1,0 +1,41 @@
+---
+- name: "Copiando al disco duro externo"
+  hosts: localhost
+  tasks:
+    - name: Copying openmind
+      ansible.posix.synchronize:
+        src: "/home/xjohnyx/Insync/johny.jxc@gmail.com/Google\ Drive\ -\ Shared\ with\ me/TUOPENMIND/"
+        dest: /media/xjohnyx/BACKUP/JOHNY/TUOPENMIND/
+        recursive: yes
+
+    - name: Copying LOL directory
+      ansible.posix.synchronize:
+        src: "/home/xjohnyx/Insync/jjimenez@licenciasonline.com/OneDrive\ Biz/LOL/"
+        dest: /media/xjohnyx/BACKUP/JOHNY/LOL/OneDrive/LOL/
+        recursive: yes
+
+    - name: Copying Red Hat directory
+      ansible.posix.synchronize:
+        src: "/home/xjohnyx/Insync/jjimenez@licenciasonline.com/OneDrive\ Biz/Red\ Hat/"
+        dest: /media/xjohnyx/BACKUP/JOHNY/LOL/OneDrive/Red\ Hat/
+        recursive: yes
+
+
+    - name: Copying Citrix directory
+      ansible.posix.synchronize:
+        src: "/home/xjohnyx/Insync/jjimenez@licenciasonline.com/OneDrive\ Biz/CITRIX/"
+        dest: /media/xjohnyx/BACKUP/JOHNY/LOL/OneDrive/CITRIX/
+        recursive: yes
+
+
+    - name: Copying RSA directory
+      ansible.posix.synchronize:
+        src: "/home/xjohnyx/Insync/jjimenez@licenciasonline.com/OneDrive\ Biz/RSA/"
+        dest: /media/xjohnyx/BACKUP/JOHNY/LOL/OneDrive/RSA/
+        recursive: yes
+
+    - name: Copying GDrive personal directory
+      ansible.posix.synchronize:
+        src: "/home/xjohnyx/Insync/johny.jxc@gmail.com/Google\ Drive/"
+        dest: "/media/xjohnyx/BACKUP/JOHNY/Google\ Drive/"
+        recursive: yes

@@ -1,9 +1,10 @@
 ---
-- name: "Instalar algo mas de prueba Notepad++"
+- name: "Instalar algo mas personalizado"
   hosts: win2
   tasks:
-    - name: Installing notepad++
+    - name: Installing "{{ paquete }}"
       win_chocolatey:
           name:
-           - "{{ paquete }}"
-          state: present
+           - {{ paquete  }}
+          state: absent
+          debug
