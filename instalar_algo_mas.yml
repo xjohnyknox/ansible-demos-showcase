@@ -2,7 +2,7 @@
 - name: "Instalar algo mas"
   hosts: win2
   tasks:
-    - name: Instalando lo que pusiste: {{ paquete  }}
+    - name: Instalando lo que pusiste
       win_chocolatey:
           name:
            - {{ paquete  }}
